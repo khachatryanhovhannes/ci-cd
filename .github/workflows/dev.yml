@@ -57,7 +57,7 @@ jobs:
           git fetch --all
 
           # Create pull request using GitHub CLI
-          gh pr create --base main --head dev --title "Auto PR from dev to main" --body "Automated PR to merge dev into main" --label "ci-cd"
+          gh pr create --base main --head dev --title "Auto PR from dev to main" --body "Automated PR to merge dev into main"
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
