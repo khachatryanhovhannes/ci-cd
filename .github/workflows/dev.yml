@@ -34,9 +34,9 @@ jobs:
       - name: Run tests
         run: npm test
 
-  merge_to_main:
+  create_pull_request:
     needs: build
-    runs-on: ubuntu-latest  # specify the OS directly for this job
+    runs-on: ubuntu-latest
     if: success()
 
     steps:
@@ -48,9 +48,16 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
-      - name: Merge dev to main
+      - name: Create Pull Request
         run: |
-          git checkout main
-          git pull origin main
-          git merge dev
-          git push origin main
+          # Ensure you're on dev branch
+          git checkout dev
+          
+          # Fetch latest branches
+          git fetch --all
+
+          # Create pull request using GitHub CLI
+          gh pr create --base main --head dev --title "Auto PR from dev to main" --body "Automated PR to merge dev into main"
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
