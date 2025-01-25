@@ -8,13 +8,11 @@ on:
     branches:
       - dev
 
- 
-
 jobs:
   build:
-    runs-on: ${{ matrix.os}}
+    runs-on: ${{ matrix.os }}
 
- strategy:
+    strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
         os: [ubuntu-latest]
@@ -26,7 +24,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
 
@@ -37,10 +35,10 @@ jobs:
         run: npm test
 
   merge_to_main:
-    needs: build_and_test
-    runs-on: ${{ matrix.os}}
-    if: success() 
-    
+    needs: build
+    runs-on: ${{ matrix.os }}
+    if: success()
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
