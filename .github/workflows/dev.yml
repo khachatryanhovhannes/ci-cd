@@ -54,5 +54,5 @@ jobs:
         run: |
           git checkout main
           git pull origin main
-          git merge dev
+          git merge origin/dev
           git push origin main
